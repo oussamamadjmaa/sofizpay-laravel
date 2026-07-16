@@ -1,0 +1,22 @@
+name: Bug report
+description: Report a reproducible problem in the package.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: textarea
+    attributes:
+      label: What happened?
+      description: Include the expected and actual behavior.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Reproduction
+      description: Provide the smallest code sample and steps to reproduce. Remove credentials and personal data.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Package and Laravel versions
+    validations:
+      required: true

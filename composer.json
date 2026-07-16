@@ -1,0 +1,87 @@
+{
+    "name": "oussamamadjmaa/sofizpay-laravel",
+    "description": "A Laravel wrapper for the SofizPay API — CIB card payments and prepaid service operations (phone, internet, game recharge, bill payments) for Algeria, with typed DTOs, response objects, and built-in sandbox mocking.",
+    "keywords": [
+        "laravel",
+        "sofizpay",
+        "algeria",
+        "payment",
+        "payment-gateway",
+        "cib",
+        "cib-payment",
+        "carte-interbancaire",
+        "recharge",
+        "mobile-recharge",
+        "phone-recharge",
+        "internet-recharge",
+        "bill-payment",
+        "sonelgaz",
+        "algerie-telecom",
+        "ooredoo",
+        "mobilis",
+        "djezzy",
+        "idoom",
+        "api-wrapper",
+        "sdk",
+        "dz",
+        "php"
+    ],
+    "type": "library",
+    "homepage": "https://github.com/oussamamadjmaa/sofizpay-laravel",
+    "support": {
+        "issues": "https://github.com/oussamamadjmaa/sofizpay-laravel/issues",
+        "source": "https://github.com/oussamamadjmaa/sofizpay-laravel"
+    },
+    "require": {
+        "php": "^8.1",
+        "illuminate/support": "^10.0|^11.0|^12.0|^13.0",
+        "illuminate/http": "^10.0|^11.0|^12.0|^13.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^4.7",
+        "orchestra/testbench": "^11.1",
+        "phpstan/phpstan": "^2.2"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "OussamaMadjmaa\\SofizPay\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Oussama Madjmaa",
+            "email": "oussama@madjmaa.com",
+            "homepage": "https://www.madjmaa.com",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "OussamaMadjmaa\\SofizPay\\SofizPayServiceProvider"
+            ],
+            "aliases": {
+                "SofizPay": "OussamaMadjmaa\\SofizPay\\Facades\\SofizPay"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse src tests --no-progress --debug --level=5",
+        "baseline": "vendor/bin/phpstan analyse --generate-baseline",
+        "test": "vendor/bin/pest --no-coverage"
+    }
+}
