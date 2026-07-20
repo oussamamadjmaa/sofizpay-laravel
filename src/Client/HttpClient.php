@@ -16,37 +16,49 @@ use OussamaMadjmaa\SofizPay\Exceptions\SofizPayRequestException;
  */
 final class HttpClient
 {
+    const SANDBOX_API_BASE_URL = 'https://sofizpay.com/sandbox';
+    const LIVE_API_BASE_URL = 'https://sofizpay.com';
     protected string $apiBaseUrl;
 
     public function __construct(protected bool $sandbox)
     {
-        $this->apiBaseUrl = $this->sandbox ? 'https://sofizpay.com/sandbox' : 'https://sofizpay.com';
+        $this->apiBaseUrl = $this->sandbox ? self::SANDBOX_API_BASE_URL : self::LIVE_API_BASE_URL;
 
         $this->setupFakeResponses();
     }
 
     public function get(string $endpoint, array $data = []): Response
     {
-        return Http::get($this->apiBaseUrl.$endpoint, $data)
+        return Http::get($this->apiBaseUrl . $endpoint, $data)
             ->throw($this->throwCallback(...));
     }
 
     public function post(string $endpoint, array $data = []): Response
     {
-        return Http::post($this->apiBaseUrl.$endpoint, $data)
+        return Http::post($this->apiBaseUrl . $endpoint, $data)
             ->throw($this->throwCallback(...));
     }
 
-    public function getWithBody(string $endpoint, array $data = []): Response
+    public function getWithBody(string $endpoint, array $data = [], bool $forceLive = false): Response
     {
         return Http::withBody(json_encode($data), 'application/json')
-            ->get($this->apiBaseUrl.$endpoint)
+            ->get(($forceLive ? self::LIVE_API_BASE_URL : $this->apiBaseUrl) . $endpoint)
             ->throw($this->throwCallback(...));
     }
 
     public function getApiBaseUrl(): string
     {
         return $this->apiBaseUrl;
+    }
+
+    public function getLiveApiBaseUrl(): string
+    {
+        return self::LIVE_API_BASE_URL;
+    }
+
+    public function getSandboxApiBaseUrl(): string
+    {
+        return self::SANDBOX_API_BASE_URL;
     }
 
     private function throwCallback(Response $response, \Throwable $exception): void
@@ -121,25 +133,6 @@ final class HttpClient
                     ],
                 ],
             ],
-
-            $this->apiBaseUrl . '/services/get_products/' => [
-                'status' => 'success',
-                'count' => 8,
-                'products' => [
-                    [
-                        'name' => 'PUBG 1320 UC',
-                        'price' => '4743.24',
-                    ],
-                    [
-                        'name' => 'PUBG 1800 UC',
-                        'price' => '5929.05',
-                    ],
-                    [
-                        'name' => 'PUBG 325 UC',
-                        'price' => '1185.81',
-                    ],
-                ],
-            ]
         ]);
     }
 
@@ -172,6 +165,24 @@ final class HttpClient
                 'destination_account' => 'SANDBOX_ACCOUNT',
                 'Amount' => 0,
             ],
+            self::LIVE_API_BASE_URL . '/services/get_products/' => [
+                'status' => 'success',
+                'count' => 3,
+                'products' => [
+                    [
+                        'name' => 'PUBG 1320 UC',
+                        'price' => '4743.24',
+                    ],
+                    [
+                        'name' => 'PUBG 1800 UC',
+                        'price' => '5929.05',
+                    ],
+                    [
+                        'name' => 'PUBG 325 UC',
+                        'price' => '1185.81',
+                    ],
+                ],
+            ]
         ]);
     }
 }

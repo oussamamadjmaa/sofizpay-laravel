@@ -124,7 +124,7 @@ final class ServiceOperation
         $response = $this->httpClient->getWithBody('/services/get_products/', [
             'encrypted_sk' => $this->encryptedSK,
             'search' => $search,
-        ]);
+        ], forceLive: true);
 
         return ProductsResponse::fromArray($response->json());
     }
